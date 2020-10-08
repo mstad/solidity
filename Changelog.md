@@ -11,6 +11,7 @@ Bugfixes:
  * SMTChecker: Fix internal error when using tuples of rational literals inside the conditional operator.
  * SMTChecker: Fix internal error when assigning state variable via contract's name.
  * Code generator: Fix missing creation dependency tracking for abstract contracts.
+ * NatSpec: Fix internal error when inheriting return parameter documentation but the parameter names differ between base and inherited.
 
 
 ### 0.7.4 (2020-10-19)
