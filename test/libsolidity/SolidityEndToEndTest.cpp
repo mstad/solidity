@@ -1316,9 +1316,9 @@ BOOST_AUTO_TEST_CASE(packed_keccak256_complex_types)
 			uint120[3] x;
 			function f() public returns (bytes32 hash1, bytes32 hash2, bytes32 hash3) {
 				uint120[] memory y = new uint120[](3);
-				x[0] = y[0] = uint120(-2);
-				x[1] = y[1] = uint120(-3);
-				x[2] = y[2] = uint120(-4);
+				x[0] = y[0] = uint120(type(uint).max - 1);
+				x[1] = y[1] = uint120(type(uint).max - 2);
+				x[2] = y[2] = uint120(type(uint).max - 3);
 				hash1 = keccak256(abi.encodePacked(x));
 				hash2 = keccak256(abi.encodePacked(y));
 				hash3 = keccak256(abi.encodePacked(this.f));
@@ -4625,7 +4625,7 @@ BOOST_AUTO_TEST_CASE(internal_types_in_library)
 				for (uint i = 0; i < _haystack.length; ++i)
 					if (_haystack[i] == _needle)
 						return i;
-				return uint(-1);
+				return type(uint).max;
 			}
 		}
 		contract Test {
@@ -6473,7 +6473,7 @@ BOOST_AUTO_TEST_CASE(abi_encode_with_selector)
 			}
 			function f3() public pure returns (bytes memory) {
 				bytes4 x = 0x12345678;
-				return abi.encodeWithSelector(x, uint(-1));
+				return abi.encodeWithSelector(x, type(uint).max);
 			}
 		}
 	)";
@@ -6505,7 +6505,7 @@ BOOST_AUTO_TEST_CASE(abi_encode_with_selectorv2)
 			}
 			function f3() public pure returns (bytes memory) {
 				bytes4 x = 0x12345678;
-				return abi.encodeWithSelector(x, uint(-1));
+				return abi.encodeWithSelector(x, type(uint).max);
 			}
 			struct S { uint a; string b; uint16 c; }
 			function f4() public pure returns (bytes memory) {
@@ -6514,7 +6514,7 @@ BOOST_AUTO_TEST_CASE(abi_encode_with_selectorv2)
 				s.a = 0x1234567;
 				s.b = "Lorem ipsum dolor sit ethereum........";
 				s.c = 0x1234;
-				return abi.encodeWithSelector(x, uint(-1), s, uint(3));
+				return abi.encodeWithSelector(x, type(uint).max, s, uint(3));
 			}
 		}
 	)";
@@ -6554,10 +6554,10 @@ BOOST_AUTO_TEST_CASE(abi_encode_with_signature)
 			function f2() public pure returns (bytes memory r, uint[] memory ar) {
 				string memory x = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 				uint[] memory y = new uint[](4);
-				y[0] = uint(-1);
-				y[1] = uint(-2);
-				y[2] = uint(-3);
-				y[3] = uint(-4);
+				y[0] = type(uint).max;
+				y[1] = type(uint).max - 1;
+				y[2] = type(uint).max - 2;
+				y[3] = type(uint).max - 3;
 				r = abi.encodeWithSignature(x, y);
 				// The hash uses temporary memory. This allocation re-uses the memory
 				// and should initialize it properly.
@@ -6598,10 +6598,10 @@ BOOST_AUTO_TEST_CASE(abi_encode_with_signaturev2)
 			function f2() public pure returns (bytes memory r, uint[] memory ar) {
 				string memory x = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 				uint[] memory y = new uint[](4);
-				y[0] = uint(-1);
-				y[1] = uint(-2);
-				y[2] = uint(-3);
-				y[3] = uint(-4);
+				y[0] = type(uint).max;
+				y[1] = type(uint).max - 1;
+				y[2] = type(uint).max - 2;
+				y[3] = type(uint).max - 3;
 				r = abi.encodeWithSignature(x, y);
 				// The hash uses temporary memory. This allocation re-uses the memory
 				// and should initialize it properly.
@@ -6614,7 +6614,7 @@ BOOST_AUTO_TEST_CASE(abi_encode_with_signaturev2)
 				s.a = 0x1234567;
 				s.b = "Lorem ipsum dolor sit ethereum........";
 				s.c = 0x1234;
-				return abi.encodeWithSignature(s.b, uint(-1), s, uint(3));
+				return abi.encodeWithSignature(s.b, type(uint).max, s, uint(3));
 			}
 		}
 	)T";
